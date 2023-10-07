@@ -24,6 +24,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdio.h>
 #include "ff.h"
 /* USER CODE END Includes */
 
@@ -57,7 +58,11 @@ void SystemClock_HSIConfig(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+int _write(int fd, char *ch, int len)
+{
+    HAL_UART_Transmit(&huart1, (uint8_t *)ch, len, HAL_MAX_DELAY);
+    return len;
+}
 /* USER CODE END 0 */
 
 /**
@@ -99,24 +104,24 @@ int main(void)
 
   fr = f_mount(&FatFs, "", 0);
   if(fr) {
-      while(1) { };
+      Error_Handler();
   }
 
   fr = f_mkdir("foo");
   if(fr) {
-      //printf("Error with making directory foo\r\n");
-      while(1) { };
+      printf("Error with making directory foo\r\n");
+      Error_Handler();
   }
 
   fr = f_mkdir("foo/bar/");
   if(fr) {
-      //printf("Error with making directory foo/bar\r\n");
-      while(1) { };
+      printf("Error with making directory foo/bar\r\n");
+      Error_Handler();
   }
 
   fr = f_open(&fil, "test2.txt", FA_CREATE_ALWAYS | FA_WRITE);
   if(fr) {
-      while(1) { };
+      Error_Handler();
   }
 
   f_puts("Hello from STM32F405RGT6\r\n", &fil);
