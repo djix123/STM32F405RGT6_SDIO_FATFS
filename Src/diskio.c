@@ -27,7 +27,7 @@ DSTATUS disk_status (
 	BYTE pdrv		/* Physical drive nmuber to identify the drive */
 )
 {
-	return 0;
+	return RES_OK;
 }
 
 
